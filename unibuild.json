@@ -1,6 +1,10 @@
 {
+  "@sources": "A list of the source files. './*' by default.",
   "sources": [
     "src/main.c"
   ],
-  "build_directory": "build"
+  "@build_directory": "The directory where built binaries will be put. 'build' by default.",
+  "build_directory": "build",
+  "@unibuild_directory": "The directory unibuild will put it's generated CMakeLists.txt, Makefile, etc in. '.unibuild' by default.",
+  "unibuild_directory": "."
 }
