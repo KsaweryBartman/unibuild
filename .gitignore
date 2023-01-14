@@ -1,2 +1,2 @@
-build/*
-!build/.build
+# Added by cargo
+/target

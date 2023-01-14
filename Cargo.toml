@@ -1,0 +1,8 @@
+[package]
+name = "unibuild"
+version = "0.0.1"
+edition = "2021"
+
+# https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
