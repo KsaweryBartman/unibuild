@@ -1,39 +1,35 @@
 use clap::Parser;
 
-#[derive(Parser, Debug)]
-#[clap(about, version)]
-/// The unibuild command line utility, by default just builds your project as defined in unibuild.json
-struct ClapCli {
-    #[clap(long, required = false, default_value = "")]
-    /// Your chosen C compiler, defaults to clang
-    cc: String,
-    #[clap(long, required = false, default_value = "")]
-    /// Your chosen C++ compiler, defaults to clang++
-    cxx: String,
-}
+mod cli;
+mod detect;
 
 fn main() {
-    let found_c_compiler: String;
+    let args = cli::Arguments::parse();
+    // println!("{:?}", args);
 
-    let env_cc = std::env::var("CC");
-    if env_cc.is_ok() {
-        found_c_compiler = env_cc.unwrap();
-        println!("Found the C Compiler as an environment variable: {found_c_compiler}");
+    let build: bool = args.build || args.run;
+    let _run: bool = args.run;
+
+    // For if we use unibuild to build the project
+    let cc = detect::used_c_compiler(&args);
+    let cxx = detect::used_cpp_compiler(&args);
+    println!("\nTrying to build with specified tooling:\n\tC Compiler: {cc}\n\tC++ Compiler: {cxx}");
+
+
+    if build {
+        let a = 
+            std::process::Command::new(cc)
+            .arg("-v")
+            .output();
+
+        if a.is_err() {
+            println!("Command not found.");
+            return;
+        }
+
+        let out = a.unwrap();
+        println!("Output:");
+        println!("\tstdout:\n{}", String::from_utf8_lossy(&out.stdout));
+        println!("\tstderr:\n{}", String::from_utf8_lossy(&out.stderr));    
     }
-
-    let arg_cc = ClapCli::parse();
-
-    println!("{:?}", arg_cc);
-
-
-
-
-    // let a = std::process::Command::new("gcc").arg("-v").output();
-    // if a.is_err() {
-    //     println!("Command not found.");
-    //     return;
-    // }
-    // let out = a.unwrap();
-    // println!("stdout: {}", String::from_utf8_lossy(&out.stdout));
-    // println!("stderr: {}", String::from_utf8_lossy(&out.stderr));
 }
