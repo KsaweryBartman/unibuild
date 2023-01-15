@@ -1,0 +1,17 @@
+{
+  "targets": [
+    {
+      "name": "main",
+      "sources": [
+        "main.cpp"
+      ],
+      "build_directory": "build",
+      "unibuild_generate": [
+        "cmake",
+        "make",
+        "cmd",
+        "bash"
+      ]
+    }
+  ]
+}
