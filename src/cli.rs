@@ -2,7 +2,8 @@ use clap::Parser;
 
 #[derive(Parser, Debug, Clone)]
 #[clap(about, version)]
-/// The unibuild command line utility, by default just builds your project's build scripts as defined in unibuild.json
+/// The unibuild command line utility, by default just builds your project's build scripts as defined in "unibuild.json".
+/// You can also build and run your apps directly with unibuild, instead of building a build script, and then using it.
 pub struct Arguments {
     #[clap(long, required = false, default_value = "")]
     /// Your chosen C compiler, defaults to clang
